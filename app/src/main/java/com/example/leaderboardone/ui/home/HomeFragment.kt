@@ -1,12 +1,18 @@
-package com.example.leaderboardone
+package com.example.leaderboardone.ui.home
 
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.example.leaderboardone.FormView_screen
 import com.example.leaderboardone.Model.StudentDetails
-import com.example.leaderboardone.databinding.ActivityHomeScreenBinding
+import com.example.leaderboardone.databinding.FragmentHomeBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -14,47 +20,33 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 
-class Home_screen : AppCompatActivity() {
 
-    lateinit var binding: ActivityHomeScreenBinding
+class HomeFragment : Fragment() {
+
+    private var _binding: FragmentHomeBinding? = null
     private lateinit var auth: FirebaseAuth
     private var db = Firebase.firestore
-//    lateinit var datalist: ArrayList<StudentDetails>
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
-        super.onCreate(savedInstanceState)
-        binding = ActivityHomeScreenBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val homeViewModel =
+            ViewModelProvider(this)[HomeViewModel::class.java]
 
-        binding.UpdateProfileImg.setOnClickListener {
-            startActivity(Intent(this,Profile_screen::class.java))
-        }
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+
         auth = FirebaseAuth.getInstance()
         binding.emailText.text =auth.currentUser?.email
-        binding.LearderBoardBtn.setOnClickListener {
-            startActivity(Intent(this,LeaderBoard_screen::class.java))
-        }
-        binding.LogOutBtn.setOnClickListener {
-            auth.signOut()
-            startActivity(Intent(this,Login_screen::class.java))
-            finish()
-        }
-        // Logic for Img and Link
-        val storageRefImg = FirebaseStorage.getInstance().reference.child("images/EventImg.png")
-        val localFileImg =  File.createTempFile("EventImg","jpg")
-        storageRefImg.getFile(localFileImg).addOnSuccessListener {
-            val bitmap = BitmapFactory.decodeFile(localFileImg.absolutePath)
-            binding.EventImage.setImageBitmap(bitmap)
-        }
-        binding.Form.setOnClickListener {
-            val intent = Intent(this,FormView_screen::class.java)
-            startActivity(intent)
-        }
-
-
         //Logic for data-display of Particular logged user
         val docRef = db.collection("COMPS")
+        getGreetingMessage()
         docRef.get()
             .addOnSuccessListener { document ->
                 if (document != null) {
@@ -64,6 +56,7 @@ class Home_screen : AppCompatActivity() {
                         if (allDetails.collegeEmail.toString() == auth.currentUser?.email.toString()){
                             binding.pointText.text = allDetails.points.toString()
                             binding.nameText.text = allDetails.fullName.toString()
+                            binding.rank.text = allDetails.rank.toString()
                         }
                         Log.d("TAG","name data  ${allDetails.collegeEmail} ")
                     }
@@ -74,5 +67,24 @@ class Home_screen : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.d("TAG", "get failed with ", exception)
             }
+
+        return root
+    }
+
+    private fun getGreetingMessage(): Any {
+        val c = Calendar.getInstance()
+
+        return when (c.get(Calendar.HOUR_OF_DAY)) {
+            in 0..11 -> binding.greetingMessage.text = "Good morning"
+            in 12..15 -> binding.greetingMessage.text = "Good afternoon"
+            in 16..23 -> binding.greetingMessage.text = "Good evening"
+//            in 21..23 -> binding.greetingMessage.text = "Good Night"
+            else -> "Hello"
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
