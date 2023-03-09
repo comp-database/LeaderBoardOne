@@ -1,6 +1,5 @@
 package com.example.leaderboardone.ui.home
 
-import android.content.Intent
 import android.graphics.BitmapFactory
 import android.icu.util.Calendar
 import android.os.Bundle
@@ -10,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.leaderboardone.FormView_screen
 import com.example.leaderboardone.Model.StudentDetails
 import com.example.leaderboardone.R
 import com.example.leaderboardone.databinding.FragmentHomeBinding
@@ -53,9 +51,9 @@ class HomeFragment : Fragment() {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true)
         binding.emailText.text =auth.currentUser?.email
         binding.homePictureLoadingAnimation.visibility = View.VISIBLE
+
         //Logic for data-display of Particular logged user
         val docRef = db.collection("COMPS")
-        getGreetingMessage()
         docRef.get()
             .addOnSuccessListener { document ->
                 if (document != null) {
@@ -78,6 +76,7 @@ class HomeFragment : Fragment() {
                 Log.d("TAG", "get failed with ", exception)
             }
 
+
         // image load form selected image via Firebase
         val storageRefImg = FirebaseStorage.getInstance().reference.child(auth.currentUser?.email.toString())
         val localFileImg = File.createTempFile(auth.currentUser?.email.toString(), "jpg")
@@ -91,6 +90,7 @@ class HomeFragment : Fragment() {
         }
 
         eventChangeListener()
+        getGreetingMessage()
 
         return root
     }
@@ -113,7 +113,6 @@ class HomeFragment : Fragment() {
                             datalist.add(dc.document.toObject(StudentDetails::class.java))
                         }
                     }
-
                 }
             })
     }
@@ -125,7 +124,7 @@ class HomeFragment : Fragment() {
             in 0..11 -> binding.greetingMessage.text = "Good morning"
             in 12..15 -> binding.greetingMessage.text = "Good afternoon"
             in 16..20 -> binding.greetingMessage.text = "Good evening"
-            in 21..23 -> binding.greetingMessage.text = "Good Night"
+            in 21..23 -> binding.greetingMessage.text = "Time to sleep"
             else -> "Hello"
         }
     }

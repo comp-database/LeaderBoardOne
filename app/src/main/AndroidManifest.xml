@@ -2,10 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" tools:node="remove"/>
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
 
@@ -19,16 +22,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LeaderBoardOne"
         tools:targetApi="tiramisu">
-        <activity
-            android:name=".FormView_screen"
-            android:exported="false" />
-        <activity
-            android:name=".ui.forms.FormScreen2"
-            android:exported="false" />
 
+        <meta-data android:name="delivery_metrics_exported_to_big_query_enabled"
+            android:value="true" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/download" />
+            android:resource="@drawable/app_logo" />
         <!--
  Set color used with incoming notification messages. This is used when no color is set for the incoming
              notification message. See README(https://goo.gl/6BKBk7) for more.
@@ -39,7 +38,17 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="hello" />
 
+
+        <activity
+            android:name=".FormView_screen"
+            android:exported="false" />
+        <activity
+            android:name=".ui.forms.FormScreen2"
+            android:exported="false" />
         <activity
             android:name=".ui.Recovery.Forgot_Pass"
             android:exported="false"
@@ -55,18 +64,18 @@
             android:exported="false"
             android:label="@string/title_activity_navigation"
             android:screenOrientation="portrait"
-
             android:theme="@style/Theme.Other_Theme"/>
         <activity
             android:name=".Login_screen"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Login_Theme"/>
+            android:theme="@style/Theme.Login_Theme"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".Splash_screen"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Login_Theme">
+            android:theme="@style/Theme.Splash_Screen_Theme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -75,13 +84,14 @@
         </activity>
 
         <service
-            android:name=".MyFirebaseMessagingService"
+            android:name=".MyFirebaseMessaging"
             android:exported="false"
+            tools:ignore="Instantiable"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-    </application>
 
+    </application>
 </manifest>

@@ -57,6 +57,7 @@
             android:layout_marginEnd="40dp"
             android:textSize="17sp"
             android:padding="10dp"
+            android:imeOptions="actionDone"
             android:textColorHint="@color/back_dark"
             android:fontFamily="@font/poppins"/>
     </com.google.android.material.textfield.TextInputLayout>

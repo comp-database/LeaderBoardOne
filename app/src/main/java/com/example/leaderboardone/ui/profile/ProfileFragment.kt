@@ -113,17 +113,13 @@ class NotificationsFragment : Fragment() {
             builder.setTitle("Logout")
             //set message for alert dialog
             builder.setMessage("Do you really want to logout?")
-            builder.setIcon(baseline_cancel_24)
+            builder.setIcon(cancel_icon)
 
             //performing positive action
             builder.setPositiveButton("Yes"){dialogInterface, which ->
-                auth.signOut()
                 activity?.finish()
+                auth.signOut()
                 startActivity(Intent(this.context, Login_screen::class.java))
-            }
-            //performing cancel action
-            builder.setNeutralButton("Cancel"){dialogInterface , which ->
-                binding.loadingAnimationProfile.visibility = View.GONE
             }
             //performing negative action
             builder.setNegativeButton("No"){dialogInterface, which ->
@@ -153,6 +149,9 @@ class NotificationsFragment : Fragment() {
             binding.profilePictureLoadingAnimation.visibility = View.GONE
             binding.profilePicFirebase.setImageResource(download)
         }
+
+
+
         return root
     }
 

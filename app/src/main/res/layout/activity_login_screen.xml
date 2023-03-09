@@ -42,6 +42,7 @@
             android:textSize="17sp"
             android:textColor="@color/black"
             android:padding="10dp"
+            android:imeOptions="actionNext"
             android:textColorHint="@color/back_dark"
             android:fontFamily="@font/poppins"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -74,6 +75,7 @@
                 android:background="@drawable/round_edges"
                 android:textSize="16sp"
                 android:padding="10dp"
+                android:imeOptions="actionDone"
                 android:fontFamily="@font/poppins" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -161,7 +163,7 @@
         android:id="@+id/btn_forgot_pass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="12dp"
         android:layout_marginBottom="140dp"
         android:text="Forgot password?"
         android:textAlignment="center"
