@@ -18,4 +18,6 @@
     <color name="golder">#faff00</color>
     <color name="grey">#4B556B</color>
     <color name="blue">#7076FE</color>
+    <color name="navBar">#A5AAB5</color>
+    <color name="textColor_new">#6c757d</color>
 </resources>

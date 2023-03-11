@@ -117,8 +117,8 @@ class NotificationsFragment : Fragment() {
 
             //performing positive action
             builder.setPositiveButton("Yes"){dialogInterface, which ->
-                activity?.finish()
                 auth.signOut()
+                activity?.finish()
                 startActivity(Intent(this.context, Login_screen::class.java))
             }
             //performing negative action

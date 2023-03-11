@@ -1,5 +1,6 @@
 package com.example.leaderboardone
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,7 @@ import com.example.leaderboardone.databinding.ActivitySplashScreenBinding
 
 class Splash_screen : AppCompatActivity() {
     lateinit var binding : ActivitySplashScreenBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_splash_screen)
@@ -18,7 +20,7 @@ class Splash_screen : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-//        binding.animSplashScreenAnimation.playAnimation()
+        binding.animSplashScreenAnimation.playAnimation()
 
         supportActionBar?.hide()
         Handler().postDelayed({
@@ -27,19 +29,22 @@ class Splash_screen : AppCompatActivity() {
             finish()
         },3000)
 
+//
 
 //        setupVideoView()
 
     }
 
 //    private fun setupVideoView() {
-//        val path = "android.resource://" + packageName + "/" + R.raw.splash_screen_video
+//
+//val path = "android.resource://" + packageName + "/" + R.raw.splash_screen_video
 //        binding.videoView.setVideoURI(Uri.parse(path))
-//            val isPlaying = binding.videoView.isPlaying
-//        if (isPlaying) {
-//            binding.videoView.pause()
-//        } else {
+//        val isPlaying = binding.videoView.isPlaying
+//        binding.videoView.start()
+//        if(isPlaying){
 //            binding.videoView.start()
+//        }else{
+//            binding.videoView.resume()
 //        }
 //
 //        binding.videoView.setOnCompletionListener {
@@ -47,6 +52,7 @@ class Splash_screen : AppCompatActivity() {
 //            startActivity(intent)
 //            finish()
 //        }
+
 //        }
 
     }
